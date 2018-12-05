@@ -1,8 +1,5 @@
 package com.curso.mc.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +27,7 @@ public class CategoriaResource {
 	 * resposta http para um serviço rest.
 	 */
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Categoria obj = service.buscar(id);
+		Categoria obj = service.buscar(id);		
 		return ResponseEntity.ok(obj);
 	}
-
 }
