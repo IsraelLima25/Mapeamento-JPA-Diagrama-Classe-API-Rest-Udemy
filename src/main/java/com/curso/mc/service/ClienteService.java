@@ -20,7 +20,7 @@ public class ClienteService {
 	 * objetivo evitar as exceptions do tipo "NullPointException", guardando em si
 	 * um contexto da busca e não somente o valor retornado na query.
 	 */
-	public Cliente buscar(Integer id) {
+	public Cliente find(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));

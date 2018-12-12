@@ -20,7 +20,7 @@ public class PedidoService {
 	 * objetivo evitar as exceptions do tipo "NullPointException", guardando em si
 	 * um contexto da busca e não somente o valor retornado na query.
 	 */
-	public Pedido buscar(Integer id) {
+	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Pedido.class.getName()));

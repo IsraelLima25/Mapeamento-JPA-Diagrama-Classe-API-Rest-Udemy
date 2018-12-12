@@ -20,14 +20,22 @@ public class CategoriaService {
 	 * objetivo evitar as exceptions do tipo "NullPointException", guardando em si
 	 * um contexto da busca e não somente o valor retornado na query.
 	 */
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
-	
+
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
 		return repo.save(obj);
+	}
+
+	public Categoria update(Categoria obj) {
+		if (obj.getId() != null) {
+			return repo.save(obj);
+		}
+
+		return null;
 	}
 }
