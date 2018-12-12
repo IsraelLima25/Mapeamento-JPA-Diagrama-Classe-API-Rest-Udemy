@@ -3,10 +3,12 @@ package com.curso.mc.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.curso.mc.domain.Categoria;
 import com.curso.mc.repositories.CategoriaRepository;
+import com.curso.mc.service.exceptions.DataIntegrityException;
 import com.curso.mc.service.exceptions.ObjectNotFoundException;
 
 @Service
@@ -37,5 +39,18 @@ public class CategoriaService {
 		}
 
 		return null;
+	}
+
+	public void delete(Integer id) {
+		try {
+			find(id);
+			repo.deleteById(id);
+
+		} catch (DataIntegrityViolationException ex) {
+
+			throw new DataIntegrityException(
+					"Regra de integridade violada em " + id + " Tipo " + Categoria.class.getName());
+		}
+
 	}
 }
