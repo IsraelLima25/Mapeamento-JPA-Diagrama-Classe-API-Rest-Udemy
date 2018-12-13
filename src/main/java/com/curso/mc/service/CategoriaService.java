@@ -5,6 +5,9 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.curso.mc.domain.Categoria;
@@ -33,9 +36,10 @@ public class CategoriaService {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-	public List<Categoria> findAll(){
+
+	public List<Categoria> findAll() {
 		return repo.findAll();
-		
+
 	}
 
 	public Categoria update(Categoria obj) {
@@ -57,5 +61,10 @@ public class CategoriaService {
 					"Regra de integridade violada em " + id + " Tipo " + Categoria.class.getName());
 		}
 
+	}
+
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
 	}
 }
