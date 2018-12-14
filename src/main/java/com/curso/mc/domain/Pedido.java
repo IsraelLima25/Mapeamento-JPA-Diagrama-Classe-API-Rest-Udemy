@@ -26,7 +26,7 @@ public class Pedido implements Serializable {
 	private Date instante;
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
-	private Pagamento pagamento;
+	private Pagamento pagamento;	
 
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")

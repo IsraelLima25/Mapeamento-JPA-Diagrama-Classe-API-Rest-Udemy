@@ -24,6 +24,7 @@ public class ProdutoService {
 
 	public Page<Produto> search(String nome, List<Integer> ids, Integer page, Integer linesPerPage, String orderBy,
 			String direction) {
+		@SuppressWarnings("deprecation")
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		List<Categoria> categorias = catRepo.findAllById(ids);		
 		return prodRepo.search(nome, categorias, pageRequest);
