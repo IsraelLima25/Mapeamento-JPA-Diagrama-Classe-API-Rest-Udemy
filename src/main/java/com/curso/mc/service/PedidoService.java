@@ -40,6 +40,9 @@ public class PedidoService {
 	
 	@Autowired
 	private ProdutoService prodService;
+	
+	@Autowired
+	private EmailService emailService;
 
 	/*
 	 * O tipo Optional foi inserido a partir da versão do spring 2.0, tendo como
@@ -77,7 +80,8 @@ public class PedidoService {
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
 		
-		System.out.println(obj);
+		emailService.sendOrderConfirmationEmail(obj);
+		
 		
 		return obj;
 

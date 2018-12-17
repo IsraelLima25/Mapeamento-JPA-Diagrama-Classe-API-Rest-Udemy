@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.curso.mc.service.DBService;
+import com.curso.mc.service.EmailService;
+import com.curso.mc.service.MockEmailService;
 
 @Configuration
 @Profile("test")
@@ -20,6 +22,11 @@ public class TestConfig {
 	public boolean istantieteDataBase() throws ParseException {
 		dbService.instantieteTestDataBase();
 		return true;
+	}
+	
+	@Bean
+	public EmailService emailService() {
+		return new MockEmailService();
 	}
 	
 }
