@@ -26,8 +26,6 @@ public abstract class AbstractMailService implements EmailService {
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText(obj.toString());
 		return sm;
-	}
-
-	
+	}	
 
 }
