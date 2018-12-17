@@ -34,6 +34,12 @@ public class PedidoService {
 
 	@Autowired
 	private ProdutoRepository prodRepository;
+	
+	@Autowired
+	private ClienteService cliService;
+	
+	@Autowired
+	private ProdutoService prodService;
 
 	/*
 	 * O tipo Optional foi inserido a partir da versão do spring 2.0, tendo como
@@ -60,14 +66,19 @@ public class PedidoService {
 
 		obj = repo.save(obj);
 		pagtoRepository.save(obj.getPagamento());
+		
+		obj.setCliente(cliService.find(obj.getCliente().getId()));
 
 		for (ItemPedido ip : obj.getItens()) {
-			ip.setDesconto(0.00);
-			ip.setPreco(prodRepository.findById(ip.getProduto().getId()).get().getPreco());
+			ip.setDesconto(0.00);		
+			ip.setProduto(prodService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		itemPedidoRepository.saveAll(obj.getItens());
-
+		
+		System.out.println(obj);
+		
 		return obj;
 
 	}
