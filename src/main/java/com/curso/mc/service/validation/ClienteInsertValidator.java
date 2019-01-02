@@ -41,13 +41,13 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 		if (aux != null) {
 			list.add(new FieldMessage("email", "Este email já exite"));
 		}
-		
+
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
 					.addConstraintViolation();
 		}
-		
+
 		return list.isEmpty();
 	}
 

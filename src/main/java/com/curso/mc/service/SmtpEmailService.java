@@ -7,21 +7,20 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
 public class SmtpEmailService extends AbstractMailService {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
-	
+
 	@Autowired
 	private MailSender mailSender;
 
 	@Override
 	public void sendEmail(SimpleMailMessage msg) {
-		
+
 		LOG.info("Simulando Envio de email");
 		LOG.info(msg.toString());
 		mailSender.send(msg);
 		LOG.info("Email enviado");
-		
-		
+
 	}
 
 }

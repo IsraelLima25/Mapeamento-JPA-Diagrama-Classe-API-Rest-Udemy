@@ -1,3 +1,4 @@
+
 package com.curso.mc.resources.exceptions;
 
 import java.io.Serializable;

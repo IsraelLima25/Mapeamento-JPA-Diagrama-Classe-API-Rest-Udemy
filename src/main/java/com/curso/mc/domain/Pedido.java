@@ -29,7 +29,7 @@ public class Pedido implements Serializable {
 	private Date instante;
 
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
-	private Pagamento pagamento;	
+	private Pagamento pagamento;
 
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
@@ -136,9 +136,9 @@ public class Pedido implements Serializable {
 
 	@Override
 	public String toString() {
-		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-		StringBuilder builder = new StringBuilder();	
+		StringBuilder builder = new StringBuilder();
 		builder.append("Pedido número: ");
 		builder.append(getId());
 		builder.append(", Instante: ");
@@ -155,7 +155,5 @@ public class Pedido implements Serializable {
 		builder.append(nf.format(getValorTotal()));
 		return builder.toString();
 	}
-	
-	
 
 }
