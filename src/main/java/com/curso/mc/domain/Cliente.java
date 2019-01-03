@@ -28,16 +28,18 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	@Column(unique=true)
+	@Column(unique = true)
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
+	@JsonIgnore
+	private String senha;
 
 	@ElementCollection
 	@CollectionTable(name = "TELEFONES")
 	private Set<String> telefones = new HashSet<>();
 
-	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
@@ -47,13 +49,14 @@ public class Cliente implements Serializable {
 
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = (tipo==null) ? null : tipo.getCod();
+		this.senha = senha;
+		this.tipo = (tipo == null) ? null : tipo.getCod();
 
 	}
 
@@ -111,6 +114,14 @@ public class Cliente implements Serializable {
 
 	public void setTipo(Integer tipo) {
 		this.tipo = tipo;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public List<Endereco> getEnderecos() {
