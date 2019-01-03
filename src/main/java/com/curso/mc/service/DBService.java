@@ -20,6 +20,7 @@ import com.curso.mc.domain.PagamentoComCartao;
 import com.curso.mc.domain.Pedido;
 import com.curso.mc.domain.Produto;
 import com.curso.mc.domain.enuns.EstadoPagamento;
+import com.curso.mc.domain.enuns.Perfil;
 import com.curso.mc.domain.enuns.TipoCliente;
 import com.curso.mc.repositories.CategoriaRepository;
 import com.curso.mc.repositories.CidadeRepository;
@@ -33,7 +34,7 @@ import com.curso.mc.repositories.ProdutoRepository;
 
 @Service
 public class DBService {
-	
+
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	@Autowired
@@ -54,18 +55,16 @@ public class DBService {
 	private ItemPedidoRepository itemPedidoRepository;
 	@Autowired
 	private BCryptPasswordEncoder pe;
-		
 
-	
 	public void instantieteTestDataBase() throws ParseException {
-		
+
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
-		Categoria cat3 = new Categoria(null,"Cama mesa e banho");
-		Categoria cat4 = new Categoria(null,"Eletrônicos");
-		Categoria cat5 = new Categoria(null,"Jardinagem");
-		Categoria cat6 = new Categoria(null,"Decoração");
-		Categoria cat7 = new Categoria(null,"Perfumaria");
+		Categoria cat3 = new Categoria(null, "Cama mesa e banho");
+		Categoria cat4 = new Categoria(null, "Eletrônicos");
+		Categoria cat5 = new Categoria(null, "Jardinagem");
+		Categoria cat6 = new Categoria(null, "Decoração");
+		Categoria cat7 = new Categoria(null, "Perfumaria");
 
 		Produto p1 = new Produto(null, "Computador", 20000.00);
 		Produto p2 = new Produto(null, "Impressora", 800.00);
@@ -77,19 +76,19 @@ public class DBService {
 		Produto p8 = new Produto(null, "Roçadeira", 800.00);
 		Produto p9 = new Produto(null, "Abajour", 100.00);
 		Produto p10 = new Produto(null, "Pendente", 180.00);
-		Produto p11 = new Produto(null, "Shampoo", 90.00);		
+		Produto p11 = new Produto(null, "Shampoo", 90.00);
 
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
-		cat2.getProdutos().addAll(Arrays.asList(p2,p4));
-		cat3.getProdutos().addAll(Arrays.asList(p5,p6));
-		cat4.getProdutos().addAll(Arrays.asList(p3,p2,p1,p7));
+		cat2.getProdutos().addAll(Arrays.asList(p2, p4));
+		cat3.getProdutos().addAll(Arrays.asList(p5, p6));
+		cat4.getProdutos().addAll(Arrays.asList(p3, p2, p1, p7));
 		cat5.getProdutos().addAll(Arrays.asList(p8));
-		cat6.getProdutos().addAll(Arrays.asList(p9,p10));
+		cat6.getProdutos().addAll(Arrays.asList(p9, p10));
 		cat7.getProdutos().addAll(Arrays.asList(p11));
 
-		p1.getCategorias().addAll(Arrays.asList(cat1,cat4));
-		p2.getCategorias().addAll(Arrays.asList(cat1, cat2,cat4));
-		p3.getCategorias().addAll(Arrays.asList(cat1,cat4));
+		p1.getCategorias().addAll(Arrays.asList(cat1, cat4));
+		p2.getCategorias().addAll(Arrays.asList(cat1, cat2, cat4));
+		p3.getCategorias().addAll(Arrays.asList(cat1, cat4));
 		p4.getCategorias().addAll(Arrays.asList(cat2));
 		p5.getCategorias().addAll(Arrays.asList(cat3));
 		p6.getCategorias().addAll(Arrays.asList(cat3));
@@ -97,9 +96,9 @@ public class DBService {
 		p8.getCategorias().addAll(Arrays.asList(cat5));
 		p9.getCategorias().addAll(Arrays.asList(cat6));
 		p10.getCategorias().addAll(Arrays.asList(cat6));
-		p11.getCategorias().addAll(Arrays.asList(cat7));		
+		p11.getCategorias().addAll(Arrays.asList(cat7));
 
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2,cat3,cat4,cat5,cat6,cat7));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 
 		Estado e1 = new Estado(null, "Minas Gerais");
@@ -115,22 +114,30 @@ public class DBService {
 		estadoRepository.saveAll(Arrays.asList(e1, e2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Cliente cl1 = new Cliente(null, "Maria Silva", "israelslf22@gmail.com", "36378912377", TipoCliente.PESSOAFISICA,pe.encode("123"));
+		Cliente cli1 = new Cliente(null, "Maria Silva", "israelslf22@gmail.com", "36378912377",
+				TipoCliente.PESSOAFISICA, pe.encode("123"));
 		String t1 = "27363323";
 		String t2 = "93838393";
-		cl1.getTelefones().addAll(Arrays.asList(t1, t2));
+		cli1.getTelefones().addAll(Arrays.asList(t1, t2));
 
-		Endereco end1 = new Endereco(null, "Rua das Flores", "300", "Apto 300", "Jardim", "38220834", c1, cl1);
-		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "sala 800", "Centro", "38777012", c2, cl1);
-		cl1.getEnderecos().addAll(Arrays.asList(end1, end2));
+		Cliente cli2 = new Cliente(null, "Ana Costa", "nelio.iftm@gmail.com", "31628382740", TipoCliente.PESSOAFISICA,
+				pe.encode("123"));
+		cli2.getTelefones().addAll(Arrays.asList("93883321", "34252625"));
+		cli2.addPerfil(Perfil.ADMIN);
 
-		clienteRepository.saveAll(Arrays.asList(cl1));
-		enderecoRepository.saveAll(Arrays.asList(end1, end2));
+		Endereco end1 = new Endereco(null, "Rua das Flores", "300", "Apto 300", "Jardim", "38220834", c1, cli1);
+		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "sala 800", "Centro", "38777012", c2, cli1);
+		Endereco end3 = new Endereco(null, "Avenida Floriano", "2106", null, "Centro", "281777012", c2, cli2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+
+		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
+		enderecoRepository.saveAll(Arrays.asList(end1, end2, end3));
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cl1, end1);
-		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cl1, end2);
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, end1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, end2);
 
 		Pagamento pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
 		ped1.setPagamento(pagto1);
@@ -139,7 +146,7 @@ public class DBService {
 				null);
 		ped2.setPagamento(pagto2);
 
-		cl1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
 
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
@@ -156,7 +163,7 @@ public class DBService {
 		p3.getItens().addAll(Arrays.asList(ip2));
 
 		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
-		
+
 	}
 
 }
