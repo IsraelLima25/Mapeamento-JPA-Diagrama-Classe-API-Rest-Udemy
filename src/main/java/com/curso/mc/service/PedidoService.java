@@ -41,7 +41,6 @@ public class PedidoService {
 	@Autowired
 	private ProdutoService prodService;
 
-	@Autowired
 	private EmailService emailService;
 
 	/*
