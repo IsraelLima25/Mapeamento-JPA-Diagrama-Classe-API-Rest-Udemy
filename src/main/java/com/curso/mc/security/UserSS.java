@@ -24,7 +24,7 @@ public class UserSS implements UserDetails {
 
 	public UserSS(Integer id, String email, String senha, Set<Perfil> perfis) {
 		super();
-		this.id = id;
+		this.setId(id);
 		this.email = email;
 		this.senha = senha;
 		this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao()))
@@ -46,6 +46,14 @@ public class UserSS implements UserDetails {
 		return email;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -64,6 +72,10 @@ public class UserSS implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public boolean hasRole(Perfil perfil) {
+		return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
 	}
 
 }
