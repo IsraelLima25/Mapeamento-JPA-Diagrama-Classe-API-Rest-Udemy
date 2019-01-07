@@ -45,8 +45,9 @@ public class PedidoService {
 	private ClienteService cliService;
 
 	@Autowired
-	private ProdutoService prodService;
-
+	private ProdutoService prodService;	
+	
+	@Autowired
 	private EmailService emailService;
 
 	/*
