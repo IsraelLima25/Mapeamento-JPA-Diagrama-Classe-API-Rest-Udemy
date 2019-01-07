@@ -46,7 +46,7 @@ public class ClienteService {
 	 */
 	public Cliente find(Integer id) {
 		UserSS user = UserService.authenticated();
-		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
 			throw new AuthorizationException("Acesso negado");
 		}
 		Optional<Cliente> obj = repo.findById(id);
@@ -57,6 +57,22 @@ public class ClienteService {
 	public List<Cliente> findAll() {
 		return repo.findAll();
 
+	}
+
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+
+		Cliente obj = repo.findByEmail(email);
+
+		if (obj == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado" + user.getId() + "Tipo" + Cliente.class.getName());
+		}
+
+		return obj;
 	}
 
 	@Transactional
